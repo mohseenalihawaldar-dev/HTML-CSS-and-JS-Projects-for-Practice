@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Stopwatch & Timer</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #fefefe;
+        --container-bg: #ffffff;
+        --text-color: #333333;
+
+        --accent: #1c1c1c; /* Charcoal for light theme */
+        --btn-bg: #1c1c1c;
+        --btn-text: #ffffff;
+
+        --btn-shadow: rgba(0, 0, 0, 0.2);
+      }
+      [data-theme="dark"] {
+        --bg-color: #1c1c1c;
+        --container-bg: #2a2a2a;
+        --text-color: #f5f5f5;
+
+        --accent: #ffdd00; /* Bright yellow for dark theme */
+        --btn-bg: #ffdd00;
+        --btn-text: #1c1c1c;
+
+        --btn-shadow: rgba(255, 221, 0, 0.3);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        transition: background 0.3s ease;
+      }
+      .container {
+        background: var(--container-bg);
+        padding: 25px 30px;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        width: 400px;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+      h1 {
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* Top toggle button */
+      .top-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+      .toggle-btn {
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        border: none;
+        border-radius: 999px;
+        background: var(--btn-bg);
+        color: var(--btn-text);
+        font-weight: 600;
+        box-shadow: 0 4px 12px var(--btn-shadow);
+        transition: all 0.3s ease;
+      }
+      .toggle-btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* Nav buttons */
+      .nav {
+        margin-bottom: 20px;
+      }
+      .nav button {
+        margin: 5px;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 2px solid var(--accent);
+        background: transparent;
+        color: var(--accent);
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .nav button.active,
+      .nav button:hover {
+        background: var(--accent);
+        color: #fff;
+      }
+      [data-theme="dark"] .nav button.active,
+      [data-theme="dark"] .nav button:hover {
+        background: var(--accent);
+        color: #1c1c1c;
+      }
+
+      /* Sections */
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+      .time {
+        font-family: "Roboto Mono", monospace;
+        font-size: 2.6rem;
+        margin: 20px 0;
+        font-weight: 600;
+        color: var(--text-color);
+        letter-spacing: 1px;
+      }
+
+      /* Action button group */
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 15px;
+      }
+      .btn-group button {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        background: var(--btn-bg);
+        color: var(--btn-text);
+        box-shadow: 0 4px 10px var(--btn-shadow);
+        transition: all 0.3s ease;
+      }
+      .btn-group button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px var(--btn-shadow);
+      }
+
+      /* Inputs */
+      input {
+        padding: 8px;
+        margin: 5px;
+        border-radius: 999px;
+        border: 1px solid #ccc;
+        width: 90px;
+        text-align: center;
+        background: var(--container-bg);
+        color: var(--text-color);
+        font-family: "Roboto Mono", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-controls">
+      <button class="toggle-btn" id="themeToggle">🌙 Dark</button>
+    </div>
+
+    <div class="container">
+      <h1>⏱ Stopwatch & Timer</h1>
+
+      <div class="nav">
+        <button id="showStopwatch" class="active">Stopwatch</button>
+        <button id="showTimer">Timer</button>
+      </div>
+
+      <!-- Stopwatch Section -->
+      <div id="stopwatchSection" class="section active">
+        <div class="time" id="stopwatchDisplay">00:00:00:000</div>
+        <div class="btn-group">
+          <button id="startStopwatch">Start</button>
+          <button id="pauseStopwatch">Pause</button>
+          <button id="resetStopwatch">Reset</button>
+        </div>
+      </div>
+
+      <!-- Timer Section -->
+      <div id="timerSection" class="section">
+        <input type="number" id="minutesInput" placeholder="Minutes" min="0" />
+        <input
+          type="number"
+          id="secondsInput"
+          placeholder="Seconds"
+          min="0"
+          max="59"
+        />
+        <div class="time" id="timerDisplay">00:00</div>
+        <div class="btn-group">
+          <button id="startTimer">Start</button>
+          <button id="pauseTimer">Pause</button>
+          <button id="resetTimer">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // === Theme toggle ===
+      const body = document.body;
+      const themeBtn = document.getElementById("themeToggle");
+
+      function setTheme(theme) {
+        body.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+        themeBtn.textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
+      }
+
+      themeBtn.onclick = () => {
+        const current = body.getAttribute("data-theme") || "light";
+        setTheme(current === "light" ? "dark" : "light");
+      };
+
+      setTheme(localStorage.getItem("theme") || "light");
+
+      // === Navigation ===
+      const stopwatchBtn = document.getElementById("showStopwatch");
+      const timerBtn = document.getElementById("showTimer");
+      const stopwatchSection = document.getElementById("stopwatchSection");
+      const timerSection = document.getElementById("timerSection");
+
+      stopwatchBtn.onclick = () => {
+        stopwatchBtn.classList.add("active");
+        timerBtn.classList.remove("active");
+        stopwatchSection.classList.add("active");
+        timerSection.classList.remove("active");
+      };
+      timerBtn.onclick = () => {
+        timerBtn.classList.add("active");
+        stopwatchBtn.classList.remove("active");
+        timerSection.classList.add("active");
+        stopwatchSection.classList.remove("active");
+      };
+
+      // === Stopwatch ===
+      let stopwatchInterval,
+        stopwatchTime = 0;
+      const stopwatchDisplay = document.getElementById("stopwatchDisplay");
+
+      function formatTime(ms) {
+        let totalSeconds = Math.floor(ms / 1000);
+        let hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+        let mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+          2,
+          "0"
+        );
+        let secs = String(totalSeconds % 60).padStart(2, "0");
+        let milli = String(ms % 1000).padStart(3, "0");
+        return `${hrs}:${mins}:${secs}:${milli}`;
+      }
+
+      document.getElementById("startStopwatch").onclick = () => {
+        if (!stopwatchInterval) {
+          let start = Date.now() - stopwatchTime;
+          stopwatchInterval = setInterval(() => {
+            stopwatchTime = Date.now() - start;
+            stopwatchDisplay.textContent = formatTime(stopwatchTime);
+          }, 10);
+        }
+      };
+      document.getElementById("pauseStopwatch").onclick = () => {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+      };
+      document.getElementById("resetStopwatch").onclick = () => {
+        clearInterval(stopwatchInterval);
+        stopwatchInterval = null;
+        stopwatchTime = 0;
+        stopwatchDisplay.textContent = "00:00:00:000";
+      };
+
+      // === Timer ===
+      let timerInterval,
+        timerTime = 0;
+      const timerDisplay = document.getElementById("timerDisplay");
+
+      function formatTimer(seconds) {
+        let mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+        let secs = String(seconds % 60).padStart(2, "0");
+        return `${mins}:${secs}`;
+      }
+
+      document.getElementById("startTimer").onclick = () => {
+        if (!timerInterval) {
+          let mins =
+            parseInt(document.getElementById("minutesInput").value) || 0;
+          let secs =
+            parseInt(document.getElementById("secondsInput").value) || 0;
+          if (timerTime === 0) {
+            timerTime = mins * 60 + secs;
+          }
+          timerDisplay.textContent = formatTimer(timerTime);
+          timerInterval = setInterval(() => {
+            if (timerTime > 0) {
+              timerTime--;
+              timerDisplay.textContent = formatTimer(timerTime);
+            } else {
+              clearInterval(timerInterval);
+              timerInterval = null;
+              alert("⏰ Time's up!");
+            }
+          }, 1000);
+        }
+      };
+      document.getElementById("pauseTimer").onclick = () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      };
+      document.getElementById("resetTimer").onclick = () => {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        timerTime = 0;
+        timerDisplay.textContent = "00:00";
+      };
+    </script>
+  </body>
+</html>

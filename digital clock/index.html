@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital_Clock_by_MAH</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <!-- here is the clock structure html -->
+      <div id="analog">
+        <div class="hand hour" id="hour-hand"></div>
+        <div class="hand minute" id="minute-hand"></div>
+        <div class="hand second" id="second-hand"></div>
+        <div class="center-dot"></div>
+      </div>
+
+      <!-- now below are the digital clock and date placeholders below -->
+
+      <div id="clock">00:00:00</div>
+      <div id="date">Loading date...</div>
+      <button onclick="toggleTheme()">🌙 Toggle Theme</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
