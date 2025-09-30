@@ -23,10 +23,10 @@ Feel free to explore, get inspired, and build your own versions!
 To see the code, view live demos, and get setup instructions, please navigate to the folder for the project you are interested in.
 
 Each project has its own folder within this repository:
-* `https://github.com/mohseenalihawaldar-dev/HTML-CSS-and-JS-Projects-for-Practice/tree/main/calci`
-* `https://github.com/mohseenalihawaldar-dev/HTML-CSS-and-JS-Projects-for-Practice/tree/main/digital%20clock`
-* `https://github.com/mohseenalihawaldar-dev/HTML-CSS-and-JS-Projects-for-Practice/tree/main/navbar%20hamburger_menu`
-* `https://github.com/mohseenalihawaldar-dev/HTML-CSS-and-JS-Projects-for-Practice/tree/main/stopwatch%26timer`
+* `calci/`
+* `digital-clock/`
+* `navbar-hamburger_menu/`
+* `stopwatch-timer/`
 
 Inside each folder, you will find the project's source code and a dedicated `README.md` file with detailed explanations and instructions.
 Happy coding!
